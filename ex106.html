@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="console.dir(this.textContent)">My button</button>
+    <button onclick="console.dir(this.textContent)">Another button</button>
+    <input onchange='console.dir(this.value)' type="text">
+    <!-- Each time when we call onchange handler new execution context created for this code -->
+  </body>
+</html>
