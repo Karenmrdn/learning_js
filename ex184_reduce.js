@@ -1,5 +1,8 @@
 "use strict";
 
+/* 'reduce' always returns a single value (it can be number, object,
+array etc.) */
+
 /* If we won't pass the second parameter (default accumulator 
 value) to the 'reduce', we will get only 3 iterations instead of 4,
 because first number value will be set as the default accumulator value */
