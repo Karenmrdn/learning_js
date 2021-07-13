@@ -1,0 +1,16 @@
+"use strict";
+
+/* CHALLENGE 16 - Swap values of the two variables
+
+Swap values of the a and b.
+Don't use for this any new variable.
+*/
+
+let a = "first";
+let b = "second";
+
+// Write code here
+[a, b] = [b, a];
+
+console.log(a, b);
+// second first
