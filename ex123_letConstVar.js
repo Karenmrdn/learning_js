@@ -4,6 +4,9 @@
 LET - declared(compilation), initialized and assigned(execution)
 CONST - declared(compilation), together initialized and assigned(execution) */
 
+/* If variable only declared and not initialized, it gets to TDZ
+TDZ - temporal dead zone. We cannot access variables in these zone  */
+
 /* TASK 1 */
 const numbers1 = [23, 87, 110, 11, 20, 5, 34];
 const numbers2 = [11, 21, 31];

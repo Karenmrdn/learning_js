@@ -40,7 +40,8 @@ Create a function "tasksSortedByIds" with two parameters "tasks" and "tasksWithI
 2. At the beginning of the function log to the console quantity of the missing taskIds:
 "Quantity of the missing taskIds is 2"
 
-3. Function should return array of tasks sorted by "taskId". All tasks in the sorted array must have "taskId".
+3. Function should return array of tasks sorted by "taskId". 
+All tasks in the sorted array must have "taskId".
 
 NOTE: Original "tasks" array should remain unchanged.
 
@@ -48,6 +49,43 @@ NOTE: Hints down below!
 
 BONUS: Ensure that new unique 4-digit "taskId" is not the same as any "taskId" of the existing tasks.
 */
+
+function generateRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const generateTasksIds = (tasks) => {
+  const generatedIds = [];
+
+  return tasks.map(({ ...task }) => {
+    /* I didn't know how to make a hard copy of an array */
+    if (!task.hasOwnProperty("taskId")) {
+      let newId;
+
+      do {
+        newId = generateRandomNumber(1000, 9999);
+        // newId = generateRandomNumber(1, 5);
+      } while (
+        tasks.some((elem) => elem.taskId === newId) ||
+        generatedIds.includes(newId)
+      );
+
+      task.taskId = newId;
+
+      generatedIds.push(newId);
+      console.log(generatedIds);
+    }
+    return task;
+  });
+};
+function tasksSortedByIds(tasks, tasksWithIds = generateTasksIds(tasks)) {
+  console.log(
+    "Qty of missing task ids is ",
+    tasks.filter((task) => !task.hasOwnProperty("taskId")).length
+  ); /* Not my idea either */
+
+  return tasksWithIds.sort((a, b) => a.taskId - b.taskId);
+}
 
 const tasks = [
   { title: "Meeting with John", taskId: 4621 },
@@ -57,13 +95,21 @@ const tasks = [
   { title: "Plan a trip" },
 ];
 
-console.log("Sorted array of tasks with taskIds:", tasksSortedByIds(tasks));
+// const tasks = [
+//   { title: "Meeting with John", taskId: 1 },
+//   { title: "Visit gym", taskId: 2 },
+//   { title: "Buy new phone" },
+//   { title: "Clean the room", taskId: 3 },
+//   { title: "Plan a trip" },
+// ];
+
+console.log("Sorted array of tasks with taskIds:", ...tasksSortedByIds(tasks));
 /* 
   Quantity of the missing taskIds is 2
   Sorted array of tasks with taskIds: ...
   */
 
-console.log("Original unsorted array of tasks with missing taskIds:", tasks);
+console.log("Original unsorted array of tasks with missing taskIds:", ...tasks);
 /*
   Original unsorted array of tasks with missing taskIds: ...
   */
