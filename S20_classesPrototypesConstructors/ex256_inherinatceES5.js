@@ -1,6 +1,12 @@
 "use strict";
 
 /* !!! Each function in JS is equal to its constructor */
+/* !!! We should not change __proto__ of function-constructor,
+we should change its prototype.__proto__ to make ES5 inheritance.
+CivilPlane.__proto__ === Function.prototype // true
+CivilPlane.prototype.__proto__ === Object.prototype (by default) // true (we will change this exact prop to make inheritance) */
+
+/* Full ES5 inheritance shown in EXAMPLE 4 */
 
 /* EXAMPLE 1 */
 /* Each function in JS (accept arrow function)
@@ -71,6 +77,15 @@ Prototype chain: CivilPlane.prototype -> Object.prototype -> null */
 // smallPlane.seatsInfo();
 
 /* EXAMPLE 4 */
+/* Prototype chain: 
+CivilPlane.prototype -> Airplane.prototype -> Object.prototype */
+/* To make inheritance we need to:
+1. Reassign value of the prototype
+CivilPlane.prototype = Object.create(Airplane.prototype);
+2. Make 'constructor' prop equal to the function itself
+CivilPlane.prototype.constructor = CivilPlane;
+3. We need to call Airplane(parent function) in CivilPlane function-constructor (optional):
+Airplane.call(this, props); */
 function Airplane(props) {
   this.wingspan = props.wingspan;
   this.maxRangeOfFlight = props.maxRangeOfFlight;
@@ -81,11 +96,15 @@ Airplane.prototype.showAirplaneInfo = function () {
   );
 };
 
-function  CivilPlane(props) {
-  Airplane.call(this, props);
+function CivilPlane(props) {
+  Airplane.call(this, props); /* We need to call Airplane(parent function) here */
   this.numberOfSeats = props.numberOfSeats;
 }
 
+console.log(CivilPlane.prototype.__proto__ === Object.prototype); // true
+console.log(CivilPlane.prototype.constructor === CivilPlane); // true
+
+/* 'Object.create' sets prototype.__proto__ and hidden [[Prototype]] props equal to object, we pass as an argument */
 CivilPlane.prototype = Object.create(Airplane.prototype);
 console.log(CivilPlane.prototype.__proto__ === Airplane.prototype); // true
 
@@ -112,6 +131,7 @@ const propsForSmallPlane = {
   maxRangeOfFlight: 1000,
 };
 const smallPlane = new CivilPlane(propsForSmallPlane);
+console.log('smallPlane', smallPlane);
 
 const propsForLargeSmall = {
   numberOfSeats: 250,
@@ -119,3 +139,4 @@ const propsForLargeSmall = {
   maxRangeOfFlight: 3000,
 };
 const largePlane = new CivilPlane(propsForLargeSmall);
+console.log('largePlane', largePlane);
